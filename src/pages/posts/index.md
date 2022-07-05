@@ -8,4 +8,13 @@ author:
   name: Aleks Rutins
   href: https://aleks.rutins.com
 ---
-This is a blog!
+This is a blog! It's written using [Astro](https://astro.build). I'll generally try to write stuff here - programming-related stuff, for the most part.
+
+A test of syntax highlighting:
+```swift
+struct ContentView: View {
+  var body : some View {
+    Text("Hello, World!")
+  }
+}
+```
