@@ -1,0 +1,22 @@
+---
+import BaseHead from '../components/BaseHead.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { SITE_TITLE, SITE_DESCRIPTION } from '../config';
+---
+
+<!DOCTYPE html>
+<html lang="en-us">
+	<head>
+		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+	</head>
+	<body class="dark:bg-gray-900 dark:text-gray-100">
+		<Header title={SITE_TITLE} />
+		<main class="prose dark:prose-invert mx-auto">
+			<h1>🧑‍🚀 Hello, World!</h1>
+			<p>I'm a person. This is my blog.</p>
+			<p>I'll probably rewrite it more often than I actually post on it.</p>
+		</main>
+		<Footer />
+	</body>
+</html>
