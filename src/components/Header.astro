@@ -3,8 +3,8 @@ import HeaderLink from './HeaderLink.astro';
 import { SITE_TITLE } from '../config';
 ---
 
-<header class="flex flex-col items-center bg-green-100 dark:bg-teal-900 p-2 w-screen sticky top-[-38px] shadow-sm">
-	<a href="/" class="text-xl font-serif block pb-2">
+<header id="site-header" class="transition flex flex-col items-center p-2 w-screen sticky top-[-38px] scroll backdrop-blur-md bg-slate-50/50 dark:bg-gray-900/50 font-[Montserrat]">
+	<a href="/" class="block pb-3">
 		{SITE_TITLE}
 	</a>
 	<nav class="font-mono">
@@ -22,3 +22,16 @@ import { SITE_TITLE } from '../config';
 		margin: 0.5em 0;
 	}
 </style>
+
+<script>
+	const header = document.querySelector('header#site-header');
+	window.addEventListener('scroll', (e) => {
+		requestAnimationFrame(() => {
+			if(window.scrollY > 38) {
+				header.classList.add('shadow-md');
+			} else {
+				header.classList.remove('shadow-md');
+			}
+		});
+	})
+</script>

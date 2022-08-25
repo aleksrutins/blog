@@ -37,7 +37,7 @@ const {
 	<body class="dark:bg-gray-900 dark:text-gray-100">
 		<Header />
 		<main class="mx-auto max-w-[50rem]">
-			<article class="prose prose-img:rounded-xl prose-img:shadow-lg mx-auto dark:prose-invert">
+			<article class="prose font-serif prose-headings:font-[Montserrat] prose-img:rounded-xl prose-img:shadow-lg mx-auto dark:prose-invert">
 				{heroImage && (
 					<img
 						width={720}
@@ -46,9 +46,11 @@ const {
 						alt=""/>
 				)}
 				<h1 class="title">{title}</h1>
-				{pubDate && <span><time>{pubDate}</time> &bull;</span>}
-				{author ?? "Aleks Rutins"}
-				{updatedDate && <div>Last updated on <time>{updatedDate}</time></div>}
+				<div class="font-mono">
+					{pubDate && <span><time>{pubDate}</time> &bull;</span>}
+					{author ?? "Aleks Rutins"}
+					{updatedDate && <div>Last updated on <time>{updatedDate}</time></div>}
+				</div>
 				<hr/>
 				<slot />
 			</article>

@@ -5,4 +5,5 @@
  */
 body {
 	font-family: Verdana, sans-serif;
+  @apply bg-slate-50;
 }

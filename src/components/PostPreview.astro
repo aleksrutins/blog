@@ -1,0 +1,26 @@
+---
+const { post } = Astro.props;
+---
+
+<a class="border dark:border-gray-700 hover:shadow dark:shadow-gray-200 p-5 rounded-xl transition m-2 flex flex-row group" href={post.url}>
+    {post.frontmatter.heroImage && (
+        <img
+            width={200}
+            src={post.frontmatter.heroImage}
+            alt=""
+            class="rounded-xl mr-3"/>
+    )}
+    <div>
+        <p class="font-bold font-mono text-xs"><time datetime={post.frontmatter.pubDate}>
+            {new Date(post.frontmatter.pubDate).toLocaleDateString('en-us', {
+                year: 'numeric',	
+                month: 'short',
+                day: 'numeric',
+            })}
+        </time>
+        &bull;
+        <span>{post.frontmatter.author ?? "Aleks Rutins"}</span>
+        </p>
+        <h2 class="text-3xl font-serif block group-hover:text-teal-700 transition dark:group-hover:text-teal-300">{post.frontmatter.title}</h2>
+    </div>
+</a>

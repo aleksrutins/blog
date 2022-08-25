@@ -3,6 +3,7 @@ import BaseHead from '../components/BaseHead.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import { SITE_TITLE, SITE_DESCRIPTION } from '../config';
+import PostPreview from '../components/PostPreview.astro';
 
 // Use Astro.glob() to fetch all posts, and then sort them by date.
 const posts = (await Astro.glob('./blog/*.{md,mdx}')).sort(
@@ -21,23 +22,11 @@ const posts = (await Astro.glob('./blog/*.{md,mdx}')).sort(
 		<Header />
 		<main>
 			<content>
-				<ul class="list-none">
+				<div class="flex flex-col">
 					{posts.map((post) => (
-						<li class="my-5">
-							<p class="font-bold font-mono text-xs"><time datetime={post.frontmatter.pubDate}>
-								{new Date(post.frontmatter.pubDate).toLocaleDateString('en-us', {
-									year: 'numeric',	
-									month: 'short',
-									day: 'numeric',
-								})}
-							</time>
-							&bull;
-							<span>{post.frontmatter.author ?? "Aleks Rutins"}</span>
-							</p>
-							<a href={post.url} class="text-3xl font-serif block">{post.frontmatter.title}</a>
-						</li>
+						<PostPreview {post}></PostPreview>
 					))}
-				</ul>
+				</div>
 			</content>
 			<Footer />
 		</main>

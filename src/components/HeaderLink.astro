@@ -18,12 +18,12 @@ const isActive = href === Astro.url.pathname;
 		transition-duration: .2s;
 	}
 	a:hover {
-		@apply bg-green-300;
-		@apply dark:bg-teal-800
+		@apply text-teal-800;
+		@apply dark:text-teal-300
 	}
 	a.active {
 		font-weight: bolder;
 		color: white;
-		@apply bg-green-600;
+		@apply bg-teal-600;
 	}
 </style>
