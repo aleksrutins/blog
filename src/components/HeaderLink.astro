@@ -1,29 +1,33 @@
 ---
-export interface Props extends astroHTML.JSX.AnchorHTMLAttributes {}
+export interface Props extends astroHTML.JSX.AnchorHTMLAttributes {
+	extraLarge?: boolean
+}
 
-const { href, class: className, ...props } = Astro.props as Props;
+const { href, class: className, extraLarge, ...props } = Astro.props as Props;
 const isActive = href === Astro.url.pathname;
 ---
 
-<a href={href} class:list={[className, { active: isActive }]} {...props}>
+<a href={href} class:list={[className, { active: isActive }, { 'extra-padding': extraLarge ?? false }]} {...props}>
 	<slot />
 </a>
 <style>
 	a {
 		display: inline-block;
 		text-decoration: none;
-		padding: 5px 7px;
-		border-radius: 5px;
+		text-transform: uppercase;
+		padding: 15px 10px;
 		transition-property: all;
 		transition-duration: .2s;
 	}
+	a.extra-padding {
+		padding: 25px 10px;
+	}
 	a:hover {
-		@apply text-teal-800;
-		@apply dark:text-teal-300
+		color: grey;
 	}
 	a.active {
 		font-weight: bolder;
-		color: white;
-		@apply bg-teal-600;
+		color: black;
+		background-color: white;
 	}
 </style>

@@ -1,19 +1,26 @@
 ---
 import HeaderLink from './HeaderLink.astro';
-import { SITE_TITLE } from '../config';
+const links = [
+	['/', 'Home'],
+	['/blog', 'Blog'],
+	['/about', 'About']
+]
 ---
 
-<header id="site-header" class="transition flex flex-col items-center p-2 w-screen sticky top-[-38px] scroll backdrop-blur-md bg-slate-50/50 dark:bg-gray-900/50 font-[Montserrat]">
-	<a href="/" class="block pb-3">
-		{SITE_TITLE}
-	</a>
-	<nav class="font-mono">
-		<HeaderLink href="/">Home</HeaderLink>
-		<HeaderLink href="/blog">Blog</HeaderLink>
-		<HeaderLink href="/about">About</HeaderLink>
-		<HeaderLink href="https://github.com/aleksrutins" target="_blank">GitHub</HeaderLink>
-	</nav>
+<header id="site-header" class="bg-black flex flex-row justify-center px-6 z-20 font-sans text-white w-screen relative">
+	{links.map(link => <HeaderLink href={link[0]} extraLarge={true}>{link[1]}</HeaderLink>)}
 </header>
+<div id="site-header-foldout" class="rounded-full bg-black fixed top-1 left-1 m-2 z-10 shadow-md">
+	<div id="site-header-foldout--button">
+		<div class="line line-top"></div>
+		<div class="line line-middle"></div>
+		<div class="line line-bottom"></div>
+	</div>
+	<div id="site-header-foldout--header">
+		{links.map(link => <HeaderLink href={link[0]}>{link[1]}</HeaderLink>)}
+	</div>
+	<div></div>
+</div>
 <style>
 	header {
 		margin: 0em 0 2em;
@@ -21,17 +28,68 @@ import { SITE_TITLE } from '../config';
 	h2 {
 		margin: 0.5em 0;
 	}
+
+	#site-header-foldout {
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+		justify-content: space-between;
+		overflow: hidden;
+		border: 1px solid black;
+	}
+
+	#site-header-foldout--button {
+		margin: 5px;
+		padding: 15px 13px;
+		--line-color: white;
+		cursor: pointer;
+		border-radius: 50%;
+		transition-property: all;
+		transition-duration: .2s;
+	}
+
+	#site-header-foldout--button .line {
+		height: 2px;
+		width: 17px;
+		margin: 2px;
+		background-color: var(--line-color);
+		transition-property: transform;
+		transition-duration: .2s;
+	}
+
+	#site-header-foldout[data-open] #site-header-foldout--button .line.line-top {
+		transform: translateY(4px) rotateZ(45deg);
+	}
+	#site-header-foldout[data-open] #site-header-foldout--button .line.line-bottom {
+		transform: translateY(-4px) rotateZ(-45deg);
+	}
+
+	#site-header-foldout--header {
+		display: none;
+		flex-direction: row;
+		color: white
+	}
+
+	#site-header-foldout[data-open] #site-header-foldout--header {
+		display: flex;
+	}
+
+	#site-header-foldout[data-open] #site-header-foldout--button {
+		background-color: white;
+		--line-color: black;
+	}
 </style>
 
 <script>
 	const header = document.querySelector('header#site-header');
-	window.addEventListener('scroll', (e) => {
-		requestAnimationFrame(() => {
-			if(window.scrollY > 38) {
-				header.classList.add('shadow-md');
-			} else {
-				header.classList.remove('shadow-md');
-			}
-		});
+	const foldout = document.querySelector('#site-header-foldout');
+	const foldoutBtn = foldout.querySelector('#site-header-foldout--button');
+
+	foldoutBtn.addEventListener('click', () => {
+		if(foldout.hasAttribute('data-open')) {
+			foldout.removeAttribute('data-open')
+		} else {
+			foldout.setAttribute('data-open', '');
+		}
 	})
 </script>
