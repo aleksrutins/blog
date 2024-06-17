@@ -16,5 +16,3 @@ gem "rerun", "~> 0.14.0"
 gem "kramdown", "~> 2.4"
 
 gem "redis", "~> 5.2"
-
-gem 'dotenv', groups: [:development, :test]

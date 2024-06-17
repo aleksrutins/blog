@@ -1,4 +1,3 @@
-require 'dotenv/load'
 require 'sinatra'
 require 'kramdown'
 require 'redis'
@@ -27,7 +26,7 @@ get '/p/new' do
 end
 
 post '/p/new' do
-  return false unless params[:token] == ENV['PUBLISH_TOKEN']
+  return 'Unauthorized' unless params[:token] == redis.get('publish_token')
 
   redis.set("post:#{params[:slug]}",
             params.slice(:title, :published_on, :summary, :body)
