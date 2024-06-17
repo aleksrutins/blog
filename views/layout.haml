@@ -1,0 +1,12 @@
+!!! 5
+%html
+  %head
+    %title= title
+    %meta{charset: "utf-8"}
+    %meta{name: 'aspect-ratio', value: 'width=device-width;actual-size=1.0'}
+    %link{rel: 'stylesheet', href: '/app.css'}
+  %body
+    %main
+      - if show_home
+        %a.smallcaps.center{href: '/'} All Posts
+      = yield

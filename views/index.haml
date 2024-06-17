@@ -1,0 +1,10 @@
+%img{src: '/avatar.jpg', class: 'avatar'}
+%h1=author_name
+
+- posts.each do |post|
+  %a{class: 'post-preview', href: "/p/#{post[:id]}"}
+    %h2= post['title']
+    %p.smallcaps= format_date(post['published_on'])
+    %p= post['summary']
+
+%a.smallcaps.center{href: '/p/new', style: 'padding: 20px'} Publish
