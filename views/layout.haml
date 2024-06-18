@@ -10,3 +10,9 @@
       - if show_home
         %a.smallcaps.center{href: '/'} All Posts
       = yield
+
+      %p.center{style: 'color: gray; font-style: italic;'}
+        %a{href: 'https://fly.io'} Flying
+        to the moon on
+        %a{href: 'https://sinatrarb.com'} Sinatra
+        = Sinatra::VERSION
