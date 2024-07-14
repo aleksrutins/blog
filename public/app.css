@@ -1,4 +1,5 @@
-html, body {
+html,
+body {
     margin: 0;
     padding: 0;
 }
@@ -8,7 +9,12 @@ body {
     min-height: 100vh;
     background-color: #fffffd;
 
-    font-family: -system-ui, -apple-system, Cantarell, Ubuntu, sans-serif;
+    font-family:
+        -system-ui,
+        -apple-system,
+        Cantarell,
+        Ubuntu,
+        sans-serif;
 }
 
 main {
@@ -62,11 +68,11 @@ a:not(.post-preview):hover {
     display: block;
     border-radius: 10px;
     color: #515151;
-    border: 1px solid #c1bfb5;
+    background-color: #f6f8fa;
     padding-left: 20px;
     padding-right: 20px;
     transition-property: color, border-color;
-    transition-duration: .5s;
+    transition-duration: 0.5s;
     box-sizing: border-box;
 }
 
@@ -81,7 +87,9 @@ form {
     gap: 10px;
 }
 
-form input, form textarea, button {
+form input,
+form textarea,
+button {
     display: block;
     padding: 15px;
     border-radius: 10px;
