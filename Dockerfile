@@ -16,22 +16,14 @@ FROM base as build
 RUN apt-get update -qq && \
     apt-get install --no-install-recommends -y build-essential
 
-# Install application gems
-COPY Gemfile* .bundle/ ./
-RUN bundle install
-
-# Final stage for app image
-FROM base
-
-RUN gem install ffi
-
-# Run and own the application files as a non-root user for security
 RUN useradd ruby --home /app --shell /bin/bash
 USER ruby:ruby
 
+# Install application gems
+COPY --chown=ruby:ruby Gemfile* .bundle/ ./
+RUN bundle install
 
-# Copy built artifacts: gems, application
-COPY --from=build --chown=ruby:ruby /app /app
+# Run and own the application files as a non-root user for security
 
 # Copy application code
 COPY --chown=ruby:ruby . .
