@@ -19,6 +19,8 @@ RUN apt-get update -qq && \
 RUN useradd ruby --home /app --shell /bin/bash
 USER ruby:ruby
 
+RUN chown -R ruby:ruby /app
+
 # Install application gems
 COPY --chown=ruby:ruby Gemfile* .bundle/ ./
 RUN bundle install
