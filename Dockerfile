@@ -22,7 +22,7 @@ USER ruby:ruby
 
 # Install application gems
 COPY --chown=ruby:ruby Gemfile* .bundle/ ./
-RUN bundle install
+RUN bundle config set path vendor/bundle && bundle install
 
 # Run and own the application files as a non-root user for security
 
