@@ -17,7 +17,7 @@ RUN apt-get update -qq && \
     apt-get install --no-install-recommends -y build-essential
 
 # Install application gems
-COPY Gemfile* .
+COPY Gemfile* .bundle/ ./
 RUN bundle install
 
 # Final stage for app image
@@ -29,8 +29,8 @@ RUN gem install ffi
 RUN useradd ruby --home /app --shell /bin/bash
 USER ruby:ruby
 
+
 # Copy built artifacts: gems, application
-COPY --from=build /usr/local/bundle /usr/local/bundle
 COPY --from=build --chown=ruby:ruby /app /app
 
 # Copy application code
