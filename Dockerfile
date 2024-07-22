@@ -20,9 +20,10 @@ RUN apt-get update -qq && \
 COPY Gemfile* .
 RUN bundle install
 
-
 # Final stage for app image
 FROM base
+
+RUN gem install ffi
 
 # Run and own the application files as a non-root user for security
 RUN useradd ruby --home /app --shell /bin/bash
