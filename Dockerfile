@@ -17,9 +17,8 @@ RUN apt-get update -qq && \
     apt-get install --no-install-recommends -y build-essential
 
 RUN useradd ruby --home /app --shell /bin/bash
-USER ruby:ruby
-
 RUN chown -R ruby:ruby /app
+USER ruby:ruby
 
 # Install application gems
 COPY --chown=ruby:ruby Gemfile* .bundle/ ./
