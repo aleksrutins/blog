@@ -24,3 +24,5 @@ gem 'tapioca', require: false, :group => [:development, :test]
 gem "rack-test", "~> 2.1"
 
 gem "roda", "~> 3.82"
+
+gem "ffi", "~> 1.17"

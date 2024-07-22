@@ -87,6 +87,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  ffi (~> 1.17)
   kramdown (~> 2.4)
   phlex (~> 1.11)
   rack-test (~> 2.1)
