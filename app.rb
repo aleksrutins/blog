@@ -1,42 +1,55 @@
-require 'sinatra'
+# typed: true
+require 'roda'
 require 'kramdown'
 require 'redis'
+require 'phlex'
+require 'sorbet-runtime'
+require 'json'
 
-helpers do
-  def format_date(date)
-    Date.parse(date).to_s
+class Module
+  include T::Sig
+end
+module Blog end
+
+require_relative 'util/helpers'
+require_relative 'util/db'
+require_relative 'views/layout'
+require_relative 'views/index'
+require_relative 'views/404'
+require_relative 'views/post'
+require_relative 'views/publish'
+
+class Blog::App < Roda
+  plugin :public
+
+  route do |r|
+    r.root do
+      Blog::Views::Index.new.call
+    end
+
+    r.on 'p' do
+      r.is 'new' do
+        r.get do
+          Blog::Views::Publish.new.call
+        end
+        r.post do
+          return 'Unauthorized' unless r.params['token'] == Blog::DB.publish_token
+
+          Blog::DB.update_post(r.params['slug'], Blog::DB::Post.from_hash(
+            r.params.merge(
+              "published_on" => Date.today.to_s,
+            )
+          ))
+
+          r.redirect '/'
+        end
+      end
+
+      r.get String do |slug|
+        Blog::Views::Post.new(post: Blog::DB.post(slug)).call
+      end
+    end
+
+    r.public
   end
-end
-
-redis = Redis.new(url: ENV['REDIS_URL'])
-
-set :haml, {escape_html: false}
-
-get '/' do
-  haml :index, locals: {
-    title: 'Home',
-    show_home: false,
-    author_name: redis.get('author_name'),
-    posts: redis.keys('post:*').map {|key| JSON.parse(redis.get(key)).merge(id: key.split(':').last) }
-  }
-end
-
-get '/p/new' do
-  haml :publish, locals: {title: 'Publish', show_home: true}
-end
-
-post '/p/new' do
-  return 'Unauthorized' unless params[:token] == redis.get('publish_token')
-
-  redis.set("post:#{params[:slug]}",
-            params.slice(:title, :published_on, :summary, :body)
-            .merge(
-              published_on: Date.today.to_s,
-            ).to_json)
-  redirect '/'
-end
-
-get '/p/:post' do
-  post = JSON.parse(redis.get("post:#{params[:post]}"))
-  haml :post, locals: post.merge(show_home: true)
 end
